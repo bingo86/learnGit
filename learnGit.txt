@@ -21,6 +21,13 @@
   ~]# git reset --hard '版本号'
 6.查看工作区与版本库中的内容对比
   ~]# git diff HEAD -- learnGit.txt
-7. 
+7.清除暂存区与工作区缓存
+  (1) 当工作区文件修改之后并没有git add操作，此时修改内容只在工作区的缓存中，要想清除此次的修改操作可以使用git checkout命令
+  ~]# git checkout -- learnGit.txt  #执行之后工作区中的缓存内容就会清空，文件内容又会恢复到最新一次版本库中的内容，注意“--”必须要添加，因为checkout也有切换分支的功能
+  (2) 当工作区执行git add操作，此时的修改内功被添加到stage暂存区当中，清除此次修改操作则使用git reset 命令
+  ~]# git reset HEAD learnGit.txt  #reset命令有回退历史版本功能，也有清空暂存区的功能
+  执行完reset命令后stage中的内容被删除，而工作空间中的缓存并没有被清空，需要再次执行git checkout命令来彻底还原文件状态。
+  ~]# git checkout -- learnGit.txt
+8. 
 
 
