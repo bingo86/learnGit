@@ -28,6 +28,10 @@
   ~]# git reset HEAD learnGit.txt  #reset命令有回退历史版本功能，也有清空暂存区的功能
   执行完reset命令后stage中的内容被删除，而工作空间中的缓存并没有被清空，需要再次执行git checkout命令来彻底还原文件状态。
   ~]# git checkout -- learnGit.txt
-8. 
+8. 文件删除操作
+  ~]# rm -f learnGit.txt   #此次操作只是在工作空间中将文件删除，版本库中的文件还存在，如果是误删除的情况可以使用
+  ~]# git checkout -- learnGit.txt   #利用checkout命令从版本库当中将文件还原
+  ~]# git rm learnGit.txt  #确定该文件可以删除可以使用git rm 命令将文件从版本库当中删除。
+
 
 
