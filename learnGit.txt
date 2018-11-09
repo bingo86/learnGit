@@ -32,6 +32,16 @@
   ~]# rm -f learnGit.txt   #此次操作只是在工作空间中将文件删除，版本库中的文件还存在，如果是误删除的情况可以使用
   ~]# git checkout -- learnGit.txt   #利用checkout命令从版本库当中将文件还原
   ~]# git rm learnGit.txt  #确定该文件可以删除可以使用git rm 命令将文件从版本库当中删除。
-
-
+9.创建远程仓库
+  (1) 注册github账号
+  (2) 创建新的仓库:learnGit
+  (3) 仓库创建后是空库，可以将本地仓库内容推送到远程
+      ~]# git remote add origin git@github.com:bingo86/learnGit.git  #将本地仓库与远程仓库进行关联
+      注意：github支持多种协议，此次使用的是SSH所以需要在本机中创建主机秘钥对，并将公钥发送到github仓库上
+      ~]# ssh-keygen -t rsa -C 'walle86@163.com'
+      复制id_rsa.pub内容，在github个人主页上选择Account settings，找到SSHKEYS页面，将公钥粘贴到key中保存即可
+      ~]# git push -u origin master  #把本地库推送到远程仓库中，由于远程仓库第一次运行时为空，添加-u参数可以将本地master分支推送到远程新的master分支，并且将二者进行关联。
+  (4) ~]# git push origin master   #直接使用此命令就可以将本地内容提交至远程仓库当中
+10.克隆远程仓库
+  (1) ~]# git clone git@github.com:bingo86/gitskill.git(远程需要克隆仓库的名称)
 
