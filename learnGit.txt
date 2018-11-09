@@ -1,0 +1,12 @@
+1.安装Git
+    ~#]yum install git 
+2.初始化git版本库
+  想要将某一个文件夹纳入到git当中，需要进入到该目录当中,以/data/git目录为例
+  ~#] cd /data/git
+  ~#] git init   #利用init命令初始化，将git目录纳入到版本库当中
+  初始化完成后git目录就是git的工作区
+3.创建文件
+  在git目录中初始化完成后就会生成一个.git目录的隐藏目录，该目录就是git的版本库请不要手动修改此目录中的文件，在git的版本库当中有许多很重的区，最重要的是stage(或者叫index)的暂存区，还有git自动创建的第一个分支master，以及指向master的指针HEAD。
+  ~#] git add learnGit.txt  #此命令是将工作区当中的learnGit.txt文件加入到缓存区当中，此时的文件并未纳入到版本库当中。
+4.
+
