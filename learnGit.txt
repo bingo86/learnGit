@@ -19,6 +19,8 @@
   ~]# git reset --hard HEAD   #git中使用HEAD表示当前最新版本，HEAD^表示上一个版本，HEAD^^表示上上个版本以此类推，如果内容过多则可以使用HEAD~100来表示。
   回退到历史版本之后，如果想回到最新的版本则可以使用git reflog命令来查看所有的操作历史记录，再通过git reset 命令加上需要回退的某个版本的版本号前七位就可以回退到选择的版本
   ~]# git reset --hard '版本号'
-6.
+6.查看工作区与版本库中的内容对比
+  ~]# git diff HEAD -- learnGit.txt
+7. 
 
 
