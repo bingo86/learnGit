@@ -45,3 +45,51 @@
 10.克隆远程仓库
   (1) ~]# git clone git@github.com:bingo86/gitskill.git(远程需要克隆仓库的名称)
 
+11.创建与合并分支
+  git中每次提交都会在git中串成一条线，这条线就是一个分支，git中默认只有一个分支也是主分支，被称为master。初始状态git是一条线，git将master指向最新的提交，再用HEAD指向master就能确定当前分支以及当前分支的提交点。
+  (1) ~]# git branch dev    #创建dev分支
+      ~]# git checkout dev  #切换到dev分支当中
+      方法2：
+      ~]# git checkout -b dev  #创建dev分支并切换到dev分支上
+  (2) ~]# git branch   #不加参数时查看本地库当中所有的分支
+      ~]# git branch -a #查看远程仓库当中的分支结构
+  合并分支
+      ~]# git merge dev  #将dev分支内容合并的master主分支当中，此时合并速度很快，因为git默认的是fast forward模式
+  删除分支
+      ~]# git branch -d dev  #将dev分支删除
+12.解决分支冲突
+    开发当中会遇到一种情景，当前开发的dev分支修改了某个文件恰好在master中也被人修改了，此时在dev分支当中再执行merge操作时会提示报错，此时需要手动解决冲突文件再提交。
+      ~]# git status   #查看冲突文件
+      ~]# git add "冲突文件" 
+      ~]# git commit -m "conflict file"
+      ~]# git log --graph --pretty=oneline --abbrev-commit  #查看分支合并图
+13.分支管理策略
+    在执行分支合并操作时，git会采用fast forward模式，该模式虽然执行速度快但当删除分支后，会丢失分支信息。如果要强制禁用fast forward模式，git会在合并过程中生成一个新的commit提交，以后在执行日志查看时会看出分支信息。
+      ~]# git checkout -b dev
+      ~]# git add "FILENAME"
+      ~]# git commit -m "add newfile"
+      ~]# git checkout master
+      ~]# git merge --no-ff -m "merge with no-ff" dev
+14.BUG分支管理
+    在实际开发过程中会遇到一种情形，在dev分支上进行项目开发时接到一个任务来修复之前发布过版本的一个bug，此时dev分支上的内容并没有完成无法提交，此时就可以使用git提供的stash功能来将当前的工作现场先暂时”储藏“起来，等以后再恢复就可以工作。假如说需要修复的是在master分支当中，就需要切换到master分支上来进行创建新的分支修复bug。
+      ~]# git stash
+      Saved working directory and index state WIP on dev: f52c633 add merge
+      ~]# git status   #查看当前工作区中是否是干净的
+      ~]# git checkout master
+      ~]# git checkout -b issue-101   #创建修复分支并进行切换
+      ~]# git add "FILENAME"
+      ~]# git commit -m "fix bug 101"
+      ~]# git checkout master   #修复完成后切换回master(之前假定的是master有问题)
+      ~]# git merge --no-ff -m "merge bug fixed 101" issue-101   #进行分支合并
+      ~]# git checkout dev   #切换回之前的开发场景
+      ~]# git stash list     #查看之前保存的工作场景在哪
+      恢复工作场景有两种方式：
+      方法1：
+      ~]# git stash apply   #恢复工作场景，但之前存的stash内容并不删除
+      ~]# git stash drop    #删除stash 内容
+      方法2：
+      ~]# git stash pop     #恢复stash中的内容同时删除其中的内容
+      方法1的特点在于当保存的场景内容有多个时，可以通过stash apply  "VER-ID"来 恢复到指定的工作场景
+
+
+
