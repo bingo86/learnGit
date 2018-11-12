@@ -45,6 +45,7 @@
 10.克隆远程仓库
   (1) ~]# git clone git@github.com:bingo86/gitskill.git(远程需要克隆仓库的名称)
 
+<<<<<<< HEAD
 11.创建与合并分支
   git中每次提交都会在git中串成一条线，这条线就是一个分支，git中默认只有一个分支也是主分支，被称为master。初始状态git是一条线，git将master指向最新的提交，再用HEAD指向master就能确定当前分支以及当前分支的提交点。
   (1) ~]# git branch dev    #创建dev分支
@@ -92,6 +93,3 @@
       方法1的特点在于当保存的场景内容有多个时，可以通过stash apply  "VER-ID"来 恢复到指定的工作场景
   删除分支时如果该分支没有被合并则会提示错误无法删除，此时使用-D参数来进行强制删除。
       ~]# git branch -D issue-101
-
-
-
