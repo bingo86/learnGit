@@ -1,0 +1,33 @@
+1.安装Git
+    ~#]yum install git 
+2.初始化git版本库
+  想要将某一个文件夹纳入到git当中，需要进入到该目录当中,以/data/git目录为例
+  ~#] cd /data/git
+  ~#] git init   #利用init命令初始化，将git目录纳入到版本库当中
+  初始化完成后git目录就是git的工作区
+3.创建文件
+  在git目录中初始化完成后就会生成一个.git目录的隐藏目录，该目录就是git的版本库请不要手动修改此目录中的文件，在git的版本库当中有许多很重的区，最重要的是stage(或者叫index)的暂存区，还有git自动创建的第一个分支master，以及指向master的指针HEAD。
+  ~]# git status   #此命令可以查看当前文件还没有被纳入到版本库当中,所有状态为Untracked。
+  ~]# git add learnGit.txt  #此命令是将工作区当中的learnGit.txt文件加入到缓存区当中，此时的文件并未纳入到版本库当中。
+  ~]# git status   #再次使用status查看状态就会提示有新的文件在缓存区当中
+  ~]# git commit -m "新建文件learnGit"   #此命令是将缓存区中的内容提交到master当中，以此来进行版本管理。 
+ -m 参数的作用是对此次提交做一步说明，说明此次做了什么方面的变动
+4.查看所做操作
+  ~]# git log   #查看版本库中最近到最远的操作记录
+  ~]# git log --pretty=oneline   #以时间线方式显示所有的操作记录，简单明了,所显示的共有两个字段,第一个一大串近似乱码的东西为此次操作的版本号,是git通过sha1算法生成，版本的号的作用就是进行版本的回滚与还原最新操作。
+5.回退到上一个版本内容
+  ~]# git reset --hard HEAD   #git中使用HEAD表示当前最新版本，HEAD^表示上一个版本，HEAD^^表示上上个版本以此类推，如果内容过多则可以使用HEAD~100来表示。
+  回退到历史版本之后，如果想回到最新的版本则可以使用git reflog命令来查看所有的操作历史记录，再通过git reset 命令加上需要回退的某个版本的版本号前七位就可以回退到选择的版本
+  ~]# git reset --hard '版本号'
+6.查看工作区与版本库中的内容对比
+  ~]# git diff HEAD -- learnGit.txt
+7.清除暂存区与工作区缓存
+  (1) 当工作区文件修改之后并没有git add操作，此时修改内容只在工作区的缓存中，要想清除此次的修改操作可以使用git checkout命令
+  ~]# git checkout -- learnGit.txt  #执行之后工作区中的缓存内容就会清空，文件内容又会恢复到最新一次版本库中的内容，注意“--”必须要添加，因为checkout也有切换分支的功能
+  (2) 当工作区执行git add操作，此时的修改内功被添加到stage暂存区当中，清除此次修改操作则使用git reset 命令
+  ~]# git reset HEAD learnGit.txt  #reset命令有回退历史版本功能，也有清空暂存区的功能
+  执行完reset命令后stage中的内容被删除，而工作空间中的缓存并没有被清空，需要再次执行git checkout命令来彻底还原文件状态。
+  ~]# git checkout -- learnGit.txt
+8. 
+
+
