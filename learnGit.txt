@@ -131,5 +131,34 @@
     如果需要为之前提交的版本打标签时,可以通过git log来查看某个版本的ID号，然后再通过git tag方式为选定版本打标签
     ~]# git tag v0.9 4c805e2
     ~]# git show v0.9  #查看v0.9这个版本对应的提交的哪个版本的提交
+    ~]# git tag -a v1.0 -m "添加标签说明"  "COMMIT-ID"
+    ~]# git tag -d v1.0  #删除标签
+  打完标签后可以将其推送到远程仓库当中
+    ~]# git push origin v1.0
+    ~]# git push origin --tags  #将本地所有保存的标签统一推送到远程仓库当中
+  对于已经传送到远程的标签进行删除操作的话比较繁琐一点,首先将本地标签删除,再对远程标签进行删除操作
+    ~]# git tag -d v0.9
+    ~]# git push origin :refs/tag/v0.9   #将远程标签进行删除
 
+18. 使用github
+    ~]# git git@github.com:bingo86/bootstrap.git   #将bootstrap开源框架克隆到本地仓库中进行开发，开发完成后就可以向自己的远程仓库当中进行提交操作了。
+    ~]# git remote -v  #可以查看本地与远程库信息
+    ~]# git remote rm "远程库名" #删除与远程仓库的关联，远程库默认为origin，可以设置不同名称来标识远程仓库
+    ~]# git remote add github git@github.com:bingo86/leargGit.git
+    ~]# git remote add gitee git@gitee.com:bingo86/learnGit.git
+    本地库通过以上两步操作就关联到了两个远程仓库
+    ~]# git push github master   #要对那个远程库进行推送就选择那个库名加需要推送的分支名称即可
 
+19. 自定义git
+  可以通过自定义git配置来更适合自己的使用习惯
+    ~]# git config --global user.name "UNAME"
+    ~]# git config --global user.email "EMAIL"
+    ~]# git config --global color.ui true
+
+20. 配置别名
+    ~]# git config --global alias st status
+    ~]# git config --global alias co checkout
+    ~]# git config --global alias ci commit
+    ~]# git config --global alias unstage 'reset HEAD'
+    ~]# git config --global alias last 'log -1'
+    ~]# git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
