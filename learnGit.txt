@@ -93,3 +93,29 @@
       方法1的特点在于当保存的场景内容有多个时，可以通过stash apply  "VER-ID"来 恢复到指定的工作场景
   删除分支时如果该分支没有被合并则会提示错误无法删除，此时使用-D参数来进行强制删除。
       ~]# git branch -D issue-101
+15.多人协作管理
+    当有多人协作时，大家都会往master和dev分支上推送各自修改，通过clone远程仓库时，默认只有master分支，要想通过同步远程dev分支的话需要单独处理。
+    ~]# git clone git@github.com:bingo86/learnGit.git    #克隆远程仓库当本地
+    ~]# git branch   #查看当前分支只有一个master
+    ~]# git checkout -b dev origin/dev   #将远程仓库的dev分支同步到本地
+    当多人提交dev分支时，提交操作可能会出现错误
+    ~]# git push origin dev   #向远程提交dev分支内容
+         ! [rejected]        dev -> dev (non-fast-forward)
+         error: failed to push some refs to 'git@github.com:michaelliao/learngit.git'
+         hint: Updates were rejected because the tip of your current branch is behind
+         hint: its remote counterpart. Integrate the remote changes (e.g.
+         hint: 'git pull ...') before pushing again.
+         hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+    出现该问题的原因就是远程库中的内容与本地提交的内容冲突，需要先将远程库中的内容下载到本地后解决冲突后再次提交。
+    ~]# git pull  #获取远程库中的数据
+        There is no tracking information for the current branch.
+        Please specify which branch you want to merge with.
+        See git-pull(1) for details.
+        git pull <remote> <branch>
+        If you wish to set tracking information for this branch you can do so with:
+        git branch --set-upstream-to=origin/<branch> dev
+     获取远程数据时也失败了，提示说是因为本地分支并没有与远程分支做链接。
+     ~]# git branch --set-upstream-to=origin/dev dev    #远程dev分支与本地dev分支进行关联
+     ~]# git pull  #再次获取远程数据成功，但需要先解决冲突问题后再提交。
+
+
