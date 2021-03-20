@@ -163,3 +163,7 @@
     ~]# git config --global alias unstage 'reset HEAD'
     ~]# git config --global alias last 'log -1'
     ~]# git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
+21. 配置缓存大小
+	~]# git config --gbloal http.postBuffer 524288000
+	默认大小为1M
