@@ -167,3 +167,62 @@
 21. 配置缓存大小
 	~]# git config --gbloal http.postBuffer 524288000
 	默认大小为1M
+
+22. 配置多用户仓库
+  示例：添加gitee与github账号
+    gitee账号名称：gitee_project
+    github账号名称：github_project
+  1.解除全局用户与邮箱信息操作
+    ~]# git config --global --unset user.name
+    ~]# git config --global --unset user.email
+    ~]# git config --global --list # 查看全局变量是否已删除
+  2.创建私钥
+    ~]# ssh-keygen -t rsa -C 'test1@gmail.com' -P '' -f ~/.ssh/gitee_rsa
+    ~]# ssh-keygen -t rsa -C 'test2@gmail.com' -P '' -f ~/.ssh/github_rsa
+  3.上传公钥
+    分别登录gitee.com和github.com网站进行密码添加操作
+  4.添加本地私钥
+    当前只是添加了两个秘钥，但是还未添加到git本地，此时使用git push命令，会提示无权限，需要将秘钥加入到本地
+    ~]# ssh-add ~/.ssh/gitee_rsa
+    ~]# ssh-add ~/.ssh/github_rsa
+
+    注意：如果添加的过程中出现如下错误：执行ssh-add时添加私钥到git中报错Could not open a connection to your authentication agent，则执行如下代码：
+    ~]# eval `ssh-agent`
+    执行完毕后继续执行添加私钥操作
+  5.测试连通性
+    ~]# ssh -T gitee@gitee.com
+    Hi david! You've successfully authenticated, but GITEE.COM does not provide shell access.
+    ~]# ssh -T git@github.com
+    Hi david! You've successfully authenticated, but GITEE.COM does not provide shell access.
+  6.管理秘钥
+    现在还无法使用不同的账号登录不同的版本库，需要将账号与私钥进行关联，需要编辑~/.ssh/config文件，添加如下内容
+    该文件分为多个用户配置，每个用户配置包含以下几个配置项：
+    ~]# vim ~/.ssh/config
+      # gitee账号
+      Host branchccb      # 仓库网站的别名，随意取（Host 就是可以替代 HostName 来使用的别名）
+      HostName gitee.com  # 仓库网站的域名（PS：IP 地址应该也可以）
+      User test1          # 仓库网站上的用户名
+      IdentityFile ~/.ssh/branch_rsa  # 私钥的绝对路径
+
+      # github账号
+      Host github
+      HostName github.com
+      User test2
+      IdentityFile ~/.ssh/github_rsa
+  7.配置完成后可以通过ssh -T gitee@branchccb进行联通测试
+  8.已有仓库代码仓库配置
+  
+    如果已经有了仓库代码，则需要使用vi命令修改.git文件夹(一般是在项目目录下边)下面的config文件中的url地址
+    [remote "origin"]
+        url = git@github:test1/learnGit.git
+
+  9. 不同仓库账户配置
+    对不同仓库的两个账户分别配置用户名和用户邮箱，如下只显示了配置其中一个仓库的代码。进入到上面克隆好的仓库，执行如下代码：
+    git config user.name "test1"
+    git config user.email "test1@gmail.com"
+  10.创建完成，在当前仓库下使用git pull命令来测试是否成功
+    ~]# git pull
+
+
+
+
